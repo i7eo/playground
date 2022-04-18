@@ -1,0 +1,27 @@
+.page-login {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  width: 450px;
+  padding: 20px; 
+}
+
+.login .login-form {
+  width: 100%;
+}
+.login .login-form-forgot {
+  float: right;
+}
+.login .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login .login-form-button {
+  width: 100%;
+}
