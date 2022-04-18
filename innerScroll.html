@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+	<title>Mixin</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+		.title {
+			font: 16px/48px "微软雅黑";
+		}
+        html,body{
+            height: 100%;
+        }
+        body {
+            overflow: hidden;
+        }
+		.wrapper {
+			position: relative;
+			height: 100%;
+            min-height: 100%;
+			overflow: hidden;
+		}
+        header {
+            position: relative;
+            padding: 0 90px;
+            height: 48px;
+            background: #efeff0;
+            border-bottom: 1px solid #fff;
+            text-align: center;
+        }
+		section {
+			position: absolute;
+			top: 48px;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			overflow-y: scroll;
+		}
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+	    <header>
+	    	<span class="title">This is header!</span>
+	    </header>
+	    <section>
+                光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+                光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+                光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+        光标会不断在改命令下方不断闪烁，即该命令一直在执行。通过查看资料发现 result-1.png 中的提示是警告，但是该命令确实是在执行也就是说这俩张图虽然看起来的结果是不一样但是确实都是正在执行。然后我们在 result-1.png 中的结果下继续输入 use user;、update mysql.user set password=password('12345') where user= 'root'; 、FLUSH PRIVILEGES; 这三条命令即可通过 root/12345 来登录。这里需注意一点对于正在运行的程序来说配置完其对应的系统环境变量后一定要重启服务。
+        　　三、配置 my.ini，取消 cmd 中出现的 mysql 警告信息
+        　　如果在你的 mysql 安装目录下有 my.ini 那么你只需 [mysqld] 下的新增一行 #explicit_defaults_for_timestamp=true 即可。倘若你只有 my-default.ini 文件，那么你可以将 my-default.ini 复制一份并且重命名为 my.ini 然后在复制的这一份 my.ini 中的 [mysqld] 下方新增一行 #explicit_defaults_for_timestamp=true 即可。每次修改完 my.ini 后需要重启服务，可以在 services.msc 中重启也可以通过 mysqld -remove与mysqld /install 重启。
+        　　四、mysqldump命令还原失败
+        　　通过查阅资料发现 mysqldump 在还原数据库时是同时多张表一起还原。在项目中根据 log 发现假若其中一张表出了问题这张表之后的所有表中数据都会还原失败。这里需要将 mysqldump -h port -u root -p pwd database_name < c:/test.sql 改为 mysql  -h port -u root -p pwd -Ddatabase_name < c:/test.sql，区别在与把 mysqldump / database_name 改为 mysql / -Ddatabase_name（这里的多了 -D 参数）。
+         </section>
+</div>
+</body>
+</html>

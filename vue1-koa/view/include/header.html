@@ -1,0 +1,10 @@
+
+<div id="app_header" class="header-tab">
+    <em class="header-checkIn"></em>
+    <em class="header-user"></em>
+    <div class="Swipe-tab Swipe-tab_2">
+        <a href="javascript:" v-on:click="tabSwitch(0)" class="{{tab_1_class}}"></a>  <!--这样写避免多了一次单击a之后的网络请求-->
+        <a href="javascript:" v-on:click="tabSwitch(1)" class="{{tab_2_class}}"></a>
+        <i style="transition-duration: {{header_duration}}s; transform: translate3d({{header_position}}px,0,0)"></i>
+    </div>
+</div>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>star-v1</title>
+    <link rel="stylesheet" href="../common/base.css" />
+    <style>
+        .star li {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <section class="star">
+        <ul class="star-list">
+            <li class="item iconfont icon-star-off" title="wtf"></li>
+            <li class="item iconfont icon-star-off" title="bad"></li>
+            <li class="item iconfont icon-star-off" title="not bad"></li>
+            <li class="item iconfont icon-star-off" title="good"></li>
+            <li class="item iconfont icon-star-off" title="perfect"></li>
+        </ul>
+    </section>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
+
+<script>
+    var starRating = (function() {
+        // 整颗
+        var lightenFullStar = function(el, opts) {
+            this.$el = $(el)
+            this.$stars = this.$el.find('.item')
+            this.opts = opts
+        }
+        lightenFullStar.prototype.lighten = function(num) {
+            // num = Math.ceil(num * 2) / 2
+            num = parseInt(num)
+            this.$stars.each(function(i) {
+                if(i < num ) {
+                    $(this).removeClass('icon-star-off').addClass('icon-star-on')
+                }else{
+                    $(this).removeClass('icon-star-on').addClass('icon-star-off')
+                }
+            })
+        }
+        lightenFullStar.prototype.bindEvent = function() {
+            var self = this
+            self.$el.on('click', '.item', function() {
+                var selectedStar = $(this).index() + 1
+                self.opts.num = selectedStar
+                typeof self.opts.select === 'function' && self.opts.select.call(this, selectedStar, self.$stars.length)
+            }).on('mouseover', '.item', function() {
+                self.lighten($(this).index() + 1)
+            }).on('mouseout', function() {
+                self.lighten(self.opts.num)
+            })
+        }
+        lightenFullStar.prototype.init = function() {
+            this.lighten(this.opts.num)
+            if(!this.opts.readOnly){
+                this.bindEvent()
+            }
+        }
+
+        // half
+        var lightenHalfStar = function(el, opts) {
+            this.$el = $(el)
+            this.$stars = this.$el.find('.item')
+            this.opts = opts
+            this.patch = 1
+        }
+        lightenHalfStar.prototype.lighten = function(num) {
+            // num = Math.ceil(num * 2) / 2
+            var integer = parseInt(num),
+                hasDecimals = integer !== num
+            
+            // 整颗的点亮
+            this.$stars.each(function(i) {
+                if(i < num ) {
+                    $(this).removeClass('icon-star-off icon-star-half').addClass('icon-star-on')
+                }else{
+                    $(this).removeClass('icon-star-on icon-star-half').addClass('icon-star-off')
+                }
+            })
+            // 半颗的点亮
+            if(hasDecimals) {
+                this.$stars.eq(integer).removeClass('icon-star-off icon-star-on').addClass('icon-star-half')
+            }
+        }
+        lightenHalfStar.prototype.bindEvent = function() {
+            var self = this
+            self.$el.on('mousemove', '.item', function(e) {
+                // 这是理想状态如果设置padingleft/right 还没到目标dom星星就产生变化
+                // 星星的间距最好设置为margin
+                console.log('mousemove: ', e.pageX)
+                if(e.pageX - $(this).offset().left < $(this).width() / 2) {
+                    self.patch = 0.5
+                }else{
+                    self.patch = 1
+                }
+                var selectedStar = $(this).index() + self.patch
+                self.lighten(selectedStar)
+            }).on('click', '.item', function() {
+                self.opts.num = $(this).index() + self.patch
+                // hook 
+                typeof self.opts.select === 'function' && self.opts.select.call(this, self.opts.num, self.$stars.length)
+                // 如果不想把select写在实例中，解耦的话也很简单。如下：
+                // self.$el.trigger('select', [self.opts.num, self.$stars.length])
+            }).on('mouseout', function() {
+                self.lighten(self.opts.num)
+            })
+        }
+        lightenHalfStar.prototype.init = function() {
+            this.lighten(this.opts.num)
+            if(!this.opts.readOnly){
+                this.bindEvent()
+            }
+        }
+
+
+        // default
+        var defaults = {
+            mode: 'full',
+            num: 0,
+            readOnly: false,
+            select: function() {}
+        }
+
+        // lighten.default = {
+        //     mode: 'full',
+        //     total: 5,
+        //     num: 0,
+        //     readOnly: false,
+        //     width: 20,
+        //     height: 20,
+        //     select: function() {}
+        // }
+
+        // lighten.prototype.init = function(){
+        //     this.createTpl()
+        //     this.setStyle()
+        //     if(!this.opts.readOnly){
+        //         this.bindEvent()
+        //     }
+        // }
+
+        // lighten.prototype.createTpl = function() {
+        //     var html = ''
+        //     html += '<ul class="star-list">'
+
+        //     for(var i = 0; i < this.opts.total; i++) {
+        //         html += '<li class="item iconfont icon-star-off"></li>'
+        //     }
+
+        //     html += '</ul>'
+
+        //     this.$el.html(html)
+            
+        // }
+        // lighten.prototype.setStyle = function() {
+        //     this.$stars.css({
+        //         'display': 'inline-block',
+        //         'width': self.opts.width,
+        //         'height': self.opts.height,
+        //     })
+        // }
+
+
+        // 根据default 映射要实例化的对象
+        var reflect = {
+            'full': lightenFullStar,
+            'half': lightenHalfStar
+        }
+
+        var _init = function(el, opts) {
+            opts = $.extend({}, defaults, opts)
+            // new lightenFullStar(el, opts).init()
+            // new lightenHalfStar(el, opts).init()
+            if(!reflect[opts.mode]) opts.mode = 'full'
+            new reflect[opts.mode](el, opts).init()
+        }
+
+        return {
+            init: _init
+        }
+
+    })()
+
+    starRating.init('.star-list', {
+        mode:'half',
+        num: 4.6,
+        readOnly: false,
+        select: function(selected, total) {
+            console.log(selected + '/' + total)
+        }
+    })
+    // 对应trigger
+    // $('.star-list').on('select', function(e, num, total) {})
+
+
+</script>
+</body>
+</html>

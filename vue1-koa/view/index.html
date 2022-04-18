@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" href="/static/css/reset.css">
+        <link rel="stylesheet" href="/static/css/all.css">
+        <title>webAppReader</title>
+    </head>
+    <body>
+        <div id="app" style="width: {{sw}}px;overflow: hidden;">
+            <!--利用父层div来控制子层-->
+            <% include include/header.html%>
+            <div style="width: {{dsw}}px; transition-duration: .5s;transform:translate3d({{position}}px,0px,0px);">
+                    <!-- 多加这一层的原因是为了手动让header吸顶而不是单纯的fixed，提高用户体验因为滚动条到了header层下了而不是页面最右端。-->
+                <div class="container-wrap" style="width: {{sw}}px;float: left">
+                    <div class="container-scroll" style="top: 0px;">
+                        <!--如果不用ejs这种模板包含的模式，如果某一天产品需求变更需要某俩项上下交换位置，那么你的修改代码成本相当高，所以应该这样把整个页面先拆分再include。-->
+                        <% include include/index-top.html%>
+                        <% include include/index-hot.html%>
+                        <% include include/index-recommend.html%>
+                        <% include include/index-male.html%>
+                        <% include include/index-female.html%>
+                        <% include include/index-free.html%>
+                        <% include include/index-bottom.html%>
+                    </div>
+                </div>
+                <div style="width:{{sw}}px;float: left;">
+                    <% include include/index-self.html%>
+                </div>
+            </div>
+        </div>
+
+    <script src="/static/scripts/zepto.js"></script>
+    <script src="/static/scripts/vue.js"></script>
+    <script src="/static/scripts/pages/index.js"></script>
+    </body>
+</html>

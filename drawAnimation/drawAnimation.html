@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>drawAnimation</title>
+</head>
+<style type="text/css">
+*{
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+<script type="text/javascript">
+	var drawAnimation = null;
+	var img = null;
+	var ct = null;
+	var frame = 0;
+	var imgReady = false;
+	var t1 = null;
+	var t2 = null;
+	function onload(){
+		drawAnimation = document.getElementById('drawAnimation');
+		ct = drawAnimation.getContext('2d');
+
+		drawAnimation.width = document.body.clientWidth;
+		drawAnimation.height = window.screen.availHeight;
+		img = new Image();
+		img.src = 'simba.png';
+		img.onload = imgLoaded;
+	}
+	var imgLoaded = function imgLoaded(){
+		imgReady = true;
+		requestAnimationFrame(update); //setTimeout('update()',1000/60)
+	}
+	var update = function update(){
+		redraw();
+		frame++;
+		if(frame >= 6){
+			frame = 0;
+			requestAnimationFrame(update);
+		}else{
+			requestAnimationFrame(update);
+		}
+	}
+	var redraw = function redraw(){
+		ct.fillStyle = '#000';
+		ct.fillRect(0,0,drawAnimation.width,drawAnimation.height);
+		ct.drawImage(img, frame*96,0,97,66,(drawAnimation.width/2),(drawAnimation.height/2),97,66);
+	}
+</script>
+<body onload="onload()">
+	<canvas id="drawAnimation"></canvas>
+</body>
+</html>

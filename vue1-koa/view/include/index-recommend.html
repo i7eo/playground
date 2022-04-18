@@ -1,0 +1,41 @@
+
+<div class="recommend-home">
+    <div class="recommend_header">
+        <p class="recommend-title">
+           <!--<i>推</i> 不带三角的小标签-->
+            重磅推荐
+        </p>
+        <div class="tab">
+            <a href="javascript:" class="tab-on">男</a>
+            <a href="javascript:">女</a>
+        </div>
+    </div>
+    <ul class="recommend-list">
+        <li v-for="item in recommend" v-if="$index==0">
+            <div class="book">
+                <div class="book-cover">
+                    <img alt="{{item.title}}" v-bind:src="item.cover">
+                    <span class="book-status" v-if="item.finish?status='完结':status='连载中'">{{status}}</span>
+                </div>
+                <div class="book-info">
+                    <p class="book-title">{{item.title}}</p>
+                    <p class="book-author">{{item.authors}}</p>
+                    <p class="book-summary">{{item.summary}}</p>
+                    <div class="book-tag-wrap">
+                        <div class="book-tag" v-for="tag in item.tags">{{tag}}</div>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li v-for="item in recommend" v-if="$index>=1 && $index<=9">
+            <div class="book book-no-img">
+                <span class="book-no-img-order">0{{$index}}</span>
+                <div class="book-no-img-info">
+                    <p class="book-no-img-title">{{item.title}}</p>
+                </div>
+            </div>
+        </li>
+
+    </ul>
+</div>

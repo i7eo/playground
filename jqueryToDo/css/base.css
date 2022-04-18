@@ -1,0 +1,218 @@
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: background .2s;
+    -moz-transition: background .2s;
+    -ms-transition: background .2s;
+    -o-transition: background .2s;
+    transition: background .2s;
+    outline: none;
+}
+
+body {
+    background: #00334b;
+    color: #fff;
+}
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.fr {
+    float: right;
+}
+
+textarea,
+input[type=text],
+input[type=date] {
+    background: #ddd;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+}
+
+textarea:hover,
+textarea:focus,
+input[type=text]:hover,
+input[type=date]:hover,
+input[type=text]:focus,
+input[type=date]:focus {
+    background: #eee;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+input[type=text],
+input[type=date],
+button,
+.task-detail-mask,
+.task-detail,
+textarea,
+.task {
+    border: 0;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.container {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+button{
+    width: 15%;
+    cursor: pointer;
+    background: #46b1e4;
+}
+
+button:hover {
+    background: #5fb9e4;
+}
+
+.add-task input[type=text], .task-detail input[name=remind_date], .tip .h1{
+    float: left;
+    width: 84%;
+    height: 38px;
+    margin-right: 1%;
+}
+
+.tip {
+    text-align: center;
+    font-size: large;
+    font-weight: 500;
+    color: #eeeeee;
+    display: none;
+    background-color: rgba(255,255,255,.2);
+}
+
+.add-task, .task-list {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.task {
+    position: relative;
+    min-height: 24px;
+    margin-bottom: 1em;
+    cursor: pointer;
+    color: #333;
+    background: #fff;
+}
+
+.task:hover {
+    background-color: #eee;
+}
+
+.task-list .completed {
+    background-color: rgba(255, 255, 255, .8);
+}
+
+.task-list .completed:after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 4%;
+    height: 1px;
+    width: 94%;
+    background-color: #888888;
+}
+
+.task, button[type=submit] {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .4);
+}
+
+.det, .del {
+    color: #888;
+    font-size: 90%;
+}
+
+.del:hover, .det:hover {
+    color: #333;
+}
+
+.task-detail-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*相当于top 0 left 0 width height 100%*/
+    background-color: rgba(60, 60, 60, .6);
+    display: none;
+    cursor: pointer;
+}
+
+.task-detail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    min-height: 265px;
+    background-color: white;
+    display: none;
+}
+
+.detail-list {
+    display: none;
+}
+
+.task-detail .remind {
+    padding: 10px 0;
+}
+
+.task-detail .content {
+    padding: 10px;
+    color: #333;
+}
+
+.task-detail textarea {
+    width: 100%;
+    height: 150px;
+}
+
+.pop-el-mask {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+    display: none;
+}
+
+/* 针对于父元素水平垂直居中 margin或者transform
+.pop-el {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    width: 300px;
+    height: 100px;
+    padding: 15px 10px;
+    margin: -50px 0 0 -150px;
+    color: #333333;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    background-color: white;
+    display: none;
+    !*transform: translate(-50%, -50%);*!
+}*/
+
+/*针对于屏幕的水平垂直居中需要计算*/
+.pop-el {
+    position: fixed;
+    width: 300px;
+    height: 100px;
+    padding: 15px 10px;
+    color: #333333;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    background-color: white;
+    display: none;
+    text-align: center;
+}

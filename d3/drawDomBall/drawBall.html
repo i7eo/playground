@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset = "utf-8">
+	<title>drawIcon</title>
+<link rel="stylesheet" type="text/css" href="css/allPartyCss.css">
+<script type="text/javascript" src="script/js/d3.js"></script>
+</head>
+<body>
+	<div id="showPage">
+		<script type="text/javascript">
+				var r = 30,
+					width = 1013.75,
+					height = 300;
+
+				var circle_data = [{cx : 100,cy : 150}];
+
+				var svg = d3.select("#showPage").append("svg")
+								.attr("width",width)
+								.attr("height",height);
+		
+				var drag = d3.behavior.drag()
+								.on("drag", dragmove); 
+		
+				var circle_S = svg.append("circle")
+								.attr("r", 30)
+								.attr("fill","black");
+
+					circle_S.data(circle_data)
+							.attr("cx", function(d){ return d.cx; })
+							.attr("cy", function(d){ return d.cy; })
+							.call(drag);
+ 
+					circle_S.on('contextmenu',function(){
+						d3.event.preventDefault();
+						d3.event.stopPropagation();  //为了防止出现双菜单，需要阻止事件冒泡
+						d3.select('#rightMenu').style({
+							display: 'block',
+							top : d3.event.y + 'px',
+							left : d3.event.x + 'px'
+						});
+						menuDetails();
+					});
+				
+				d3.select(document).on('click',function(){
+							d3.select('#rightMenu').style({
+								display: 'none',
+							});
+						});
+				d3.select(document).on('contextmenu',function(){
+							d3.select('#rightMenu').style({
+								display: 'none',
+							});
+						});
+
+				function dragmove(d) {	
+					var x = d3.event.x;
+					var y = d3.event.y;
+
+					if(judgeBoundary(x,y)){						
+						d3.select(this)
+						  .attr("cx", d.cx = x )
+						  .attr("cy", d.cy = y );
+					}
+				}
+				function judgeBoundary(x , y){
+					return (x >= (0 + r) && x <= (width - r)) && (y >= (0 + r) && y <= (height - r));
+				}
+
+				function menuDetails(){
+				        var Menu = document.getElementById("rightMenu");
+				        var uL = Menu.getElementsByTagName("ul");
+				        var maxWidth = 0;
+				        var maxHeight = 0;
+				        var Doc = [document.documentElement.offsetWidth, document.documentElement.offsetHeight];
+				        setWidth(uL[0]);
+				        maxWidth = Doc[0] - Menu.offsetWidth;
+				        maxHeight = Doc[1] - Menu.offsetHeight;
+				        //防止菜单溢出
+				        Menu.offsetTop > maxHeight && (Menu.style.top = maxHeight + "px");
+				        Menu.offsetLeft > maxWidth && (Menu.style.left = maxWidth + "px");
+					    //取li中最大的宽度, 并赋给同级所有li
+					    function setWidth(obj)
+					    {
+					    	 maxWidth = 0;
+					        for (i = 0; i < obj.children.length; i++)
+					        {
+					            var li = obj.children[i];
+					            var iWidth = li.clientWidth - parseInt(li.currentStyle ? li.currentStyle["paddingLeft"] : getComputedStyle(li,null)["paddingLeft"]) * 2
+					            if (iWidth > maxWidth) 
+					            	{maxWidth = iWidth};
+					        }
+					            for (i = 0; i < obj.children.length; i++) 
+					            	{obj.children[i].style.width = maxWidth + "px"};
+					      
+					    }
+					};
+
+				function del(){
+					d3.select('circle').remove();
+				}
+				function configure(){
+					d3.select('#configuration').style({
+						display :　'block'
+					});
+				}
+			</script>
+	</div>
+	<div id="rightMenu">
+    <ul>
+        <li id="relation" >Relation</li>
+        <li id="delete" onclick="del()">Delete</li>
+        <li id="config" onclick="configure()"><strong>Configuration</strong></li>
+    </ul>
+	</div>
+</body>
+</html>
+

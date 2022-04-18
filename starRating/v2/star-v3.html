@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>star</title>
+    <link rel="stylesheet" href="../common/base.css" />
+</head>
+<body>
+    <section class="star">
+        <!-- <ul class="star-list">
+            <li class="item iconfont icon-star-off" title="wtf"></li>
+            <li class="item iconfont icon-star-off" title="bad"></li>
+            <li class="item iconfont icon-star-off" title="not bad"></li>
+            <li class="item iconfont icon-star-off" title="good"></li>
+            <li class="item iconfont icon-star-off" title="perfect"></li>
+        </ul> -->
+    </section>
+
+<script src="https://cdn.bootcss.com/jquery/3.3.0/jquery.min.js"></script>
+
+<script>
+    var starRating = (function() {
+
+        var extend = function(sub, sup) {
+            var F = function() {}
+            F.prototype = sup.prototype
+            sub.prototype = new F()
+            sub.prototype.construtor = sub
+        }
+
+        // 整颗
+        var Lighten = function(el, opts) {
+            this.$el = $(el)
+            this.$stars = null
+            this.opts = opts
+            this.patch = 1
+            this.selectEvent = 'mouseover'
+        }
+        Lighten.prototype.lighten = function(num) {
+            num = parseInt(num)
+
+            this.$stars.each(function(i) {
+                if(i < num ) {
+                    $(this).removeClass('icon-star-off icon-star-half').addClass('icon-star-on')
+                }else{
+                    $(this).removeClass('icon-star-on icon-star-half').addClass('icon-star-off')
+                }
+            })
+        }
+        Lighten.prototype.bindEvent = function() {
+            var self = this
+            self.$el.on(self.selectEvent, '.item', function(e) {
+                self.calculateRange(e, $(this))
+                self.lighten($(this).index() + self.patch)
+            }).on('click', '.item', function() {
+                var selectedStar = $(this).index() + self.patch
+                self.opts.num = selectedStar
+                typeof self.opts.select === 'function' && self.opts.select.call(this, selectedStar, self.$stars.length)
+            }).on('mouseout', function() {
+                self.lighten(self.opts.num)
+            })
+        }
+        Lighten.prototype.calculateRange = function() {
+            // 子类必须重写该方法
+            console.warn('Subclasses must be overridden')
+        }
+        Lighten.prototype.createTpl = function() {
+            var html = ''
+            html += '<ul class="star-list">'
+
+            for(var i = 0; i < this.opts.total; i++) {
+                html += '<li class="item iconfont icon-star-off"></li>'
+            }
+
+            html += '</ul>'
+            this.$el.html(html)
+            this.$stars = this.$el.find('.item')
+        }
+        Lighten.prototype.setStyle = function() {
+            this.$stars.css({
+                'display': 'inline-block',
+                'width': this.opts.width,
+                'height': this.opts.height,
+            })
+        }
+        Lighten.prototype.init = function() {
+            this.createTpl()
+            this.setStyle()
+            this.lighten(this.opts.num)
+            if(!this.opts.readOnly){
+                this.bindEvent()
+            }
+        }
+
+
+        // 整颗
+        var lightenFullStar = function(el, opts) {
+            Lighten.call(this, el, opts)
+            this.selectEvent = 'mouseover'
+        }
+        extend(lightenFullStar, Lighten)
+         // lightenFullStar.prototype = new Lighten()
+        // lightenFullStar.prototype.construtor = lightenFullStar
+        lightenFullStar.prototype.lighten = function(num) {
+            Lighten.prototype.lighten.call(this, num)
+        }
+        lightenFullStar.prototype.calculateRange = function() {}
+        // lightenFullStar.prototype = new Lighten()
+        // lightenFullStar.prototype.construtor = lightenFullStar
+
+
+        // half
+        var lightenHalfStar = function(el, opts) {
+            Lighten.call(this, el, opts)
+            this.selectEvent = 'mousemove'
+        }
+        extend(lightenHalfStar, Lighten)
+        // lightenHalfStar.prototype = new Lighten()
+        // lightenHalfStar.prototype.construtor = lightenHalfStar
+        lightenHalfStar.prototype.lighten = function(num) {
+            var integer = parseInt(num),
+                hasDecimals = integer !== num
+            
+            Lighten.prototype.lighten.call(this, integer)
+            // 半颗的点亮
+            if(hasDecimals) {
+                this.$stars.eq(integer).removeClass('icon-star-off icon-star-on').addClass('icon-star-half')
+            }
+        }
+        lightenHalfStar.prototype.calculateRange = function(e, $this) {
+            if(e.pageX - $this.offset().left < $this.width() / 2) {
+                this.patch = 0.5
+            }else{
+                this.patch = 1
+            }
+        }
+        // lightenHalfStar.prototype = new Lighten()
+        // lightenHalfStar.prototype.construtor = lightenHalfStar
+         
+        var defaults = {
+            mode: 'full',
+            total: 5,
+            num: 0,
+            readOnly: false,
+            width: 20,
+            height: 20,
+            select: function() {}
+        }
+
+        // 根据default 映射要实例化的对象
+        var reflect = {
+            'full': lightenFullStar,
+            'half': lightenHalfStar
+        }
+
+        var _init = function(el, opts) {
+            opts = $.extend({}, defaults, opts)
+            if(!reflect[opts.mode]) opts.mode = 'full'
+            new reflect[opts.mode](el, opts).init()
+        }
+
+        return {
+            init: _init
+        }
+
+    })()
+
+    starRating.init('.star', {
+        mode: 'half',
+        total: 7,
+        num: 4.3,
+        readOnly: false, // 设置成true即为只显示无法选择
+        select: function(selected, total) {
+            console.log(selected + '/' + total)
+        }
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>templete</title>
+	<script type="text/javascript" src="js/d3.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var width = 400,
+			height = 400;
+
+		var dataSet = [50 , 43 , 120 , 87 , 99 , 167 , 142];
+		var svg = d3.select('body')
+					.append('svg')
+					.attr('width' , width)
+					.attr('height' , height);
+		var padding = {top : 20, right : 20, bottom : 20, left : 20};
+		var rectStep = 35,
+		    rectWidth = 30;
+
+		function draw(){
+			var updateRect = svg.selectAll('rect')
+								.data(dataSet);
+			var enterRect = updateRect.enter();
+			var exitRect = updateRect.exit();
+
+			updateRect.attr('fill' , 'steelblue')
+						.attr('x' , function(d , i){
+							return  padding.left + i * rectStep;
+						})
+						.attr('y' , function(d){
+							return height - padding.bottom - d;
+						})
+						.attr('width' , rectWidth)
+						.attr('height' , function(d){
+							return d;
+						});
+			enterRect.append('rect')
+						.attr('fill' , 'steelblue')
+						.attr('x' , function(d , i){
+							return  padding.left + i * rectStep;
+						})
+						.attr('y' , function(d){
+							return height - padding.bottom - d;
+						})
+						.attr('width' , rectWidth)
+						.attr('height' , function(d){
+							return d;
+						});
+			exitRect.remove();
+		}
+		draw();
+		
+		function sort(){
+			dataSet.sort(d3.ascending);
+			draw();
+		}
+		function add(){
+			dataSet.shift();
+			dataSet.push(Math.floor(Math.random() * 100));
+			draw();
+		}	
+	</script>
+	</br>
+	&nbsp&nbsp&nbsp&nbsp
+	<button onclick="sort()">sort</button>
+	<button onclick="add()">add</button>
+	
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Draw Clock</title>
+</head>
+
+<body>
+	<canvas id="drawClock" width="600" height="600"></canvas>
+	<script>
+		var clock = document.getElementById('drawClock');
+		var ct = clock.getContext('2d');
+		
+	function drawClock(){
+		ct.clearRect(0,0,600,600);
+		var date = new Date();
+		var hour = date.getHours();
+		var min = date.getMinutes();
+		var sec = date.getSeconds();
+
+		hour = hour>12?hour-12:hour;
+		hour = hour+min/60;
+		//表盘
+		ct.lineWidth = 10;
+		ct.strokeStyle ='blue';
+		ct.beginPath();
+		ct.arc(300,300,200,0,360,false);
+		ct.stroke();
+		ct.closePath();
+		//时刻度
+		for (var i = 0; i < 12; i++) {
+			ct.save();
+			ct.lineWidth = 7;
+			ct.strokeStyle = 'black';
+			ct.translate(300,300);
+			ct.rotate(i*30*Math.PI/180);
+			ct.beginPath();
+			ct.moveTo(0,-190);
+			ct.lineTo(0,-170);
+			ct.stroke();
+			ct.closePath();
+			ct.restore();
+		};
+		//分刻度
+		for(var i = 0; i < 60; i++){
+			ct.save();
+			ct.lineWidth = 5;
+			ct.strokeStyle = 'black';
+			ct.translate(300,300);
+			ct.rotate(i*6*Math.PI/180);
+			ct.beginPath();
+			ct.moveTo(0,-190);
+			ct.lineTo(0,-180);
+			ct.stroke();
+			ct.closePath();
+			ct.restore();
+		}
+		//时针
+		ct.save();
+		ct.lineWidth = 5;
+		ct.strokeStyle = 'black';
+		ct.translate(300,300);
+		ct.rotate(hour*30*Math.PI/180);
+		ct.beginPath();
+		ct.moveTo(0,10);
+		ct.lineTo(0,-130);
+		ct.stroke();
+		ct.closePath();
+		ct.restore();
+		//分针
+		ct.save();
+		ct.lineWidth = 4;
+		ct.strokeStyle = 'black';
+		ct.translate(300,300);
+		ct.rotate(min*6*Math.PI/180);
+		ct.beginPath();
+		ct.moveTo(0,10);
+		ct.lineTo(0,-160);
+		ct.stroke();
+		ct.closePath();
+		ct.restore();
+		//秒针
+		ct.save();
+		ct.lineWidth = 3;
+		ct.strokeStyle = 'red';
+		ct.translate(300,300);
+		ct.rotate(sec*6*Math.PI/180);
+
+		ct.beginPath();
+		ct.moveTo(0,10);
+		ct.lineTo(0,-170);
+		ct.stroke();
+		ct.closePath();
+
+		ct.beginPath();
+		ct.arc(0,0,5,0,360,false);
+		ct.stroke()
+		ct.closePath();
+		ct.fillStyle = 'black';
+		ct.fill();
+
+		ct.beginPath();
+		ct.arc(0,-150,5,0,360,false);
+		ct.stroke();
+		ct.closePath();
+		ct.fillStyle = 'black';
+		ct.fill();
+
+		ct.restore();
+	}
+	drawClock();
+	setInterval(drawClock,1000);
+	</script>
+</body>
+</html>

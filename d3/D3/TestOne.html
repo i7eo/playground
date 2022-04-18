@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Single Selected</title>
+<style type="text/css">
+	.red{
+		margin: 0px;
+		padding: 0px;
+		padding-left: 40px;
+		background-color: orange;
+		box-shadow: gray;
+		border: 1px solid #ccc;
+		float: left;
+		width: 200px;
+		height: 200px;
+	}
+</style>
+<script type="text/javascript" src="js/d3.js"></script>
+
+</head>
+<body>
+	<p id="target"></p>
+	<section>
+		<div id="div1"></div>
+		<div id="div2"></div>
+	</section>
+	<div id="3"></div>
+	<section id="section4" >
+		<table>
+			<thead>
+				<tr>
+					<th>Time</th>
+					<th>Type</th>
+					<th>Amount</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>10:22</td>
+					<td>Purchase</td>
+					<td>$10</td>
+				</tr>
+				<tr>
+					<td>12:12</td>
+					<td>Purchase</td>
+					<td>$12.50</td>
+				</tr>
+				<tr>
+					<td>14:11</td>
+					<td>Expense</td>
+					<td>$9.70</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+	<script type="text/javascript">
+		d3.select('p')
+			.text('hello world!');
+		/*d3.selectAll('div')
+			.each(function(d,i){
+				d3.select(this).attr('class', 'red');
+				d3.select(this).append('h1').text(i);
+			});*/
+		d3.select('#div1').attr('class' , 'red');
+		d3.select('section > #div2').attr('class' , 'red');
+		var body = d3.select('body');
+		body.append('section')
+			.attr('id' , 'section2')
+			.append('div')
+			.attr('class' , 'red')
+			.append('p')
+			.text('appendBox');
+		body.append('section')
+			.attr('id' , 'section3')
+			.append('div')
+			.attr('class' , 'red')
+			.append('p')
+			.text('appendBox');
+
+		var rows = d3.selectAll('tr');
+		/*d3.select(rows[0][1]).style({'background-color' : 'gray'});*/
+		rows.each(function(d , i){
+			if(i % 2 === 0){
+				d3.select(rows[0][i]).style({'background-color' : 'red'});
+			}
+		})
+		var width = 300;
+		var height = 300;
+		var svg = d3.select('body')
+					.append('svg')
+					.attr('width' , width)
+					.attr('height' , height);
+
+		var dataList = [ 250 , 210 , 170 , 130 , 90];
+		var rectHeight = 25;
+		svg.selectAll('rect')
+			.data(dataList)
+			.enter()
+			.append('rect')
+			.attr('x' , 20)
+			.attr('y' , function(d,i){
+				return i*rectHeight;
+			})
+			.attr('width' , function(d,i){
+				return d;
+			})
+			.attr('height' , rectHeight-2)
+			.attr('fill' , 'steeblue');
+	</script>
+</body>
+</html>

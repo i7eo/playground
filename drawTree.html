@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<style type="text/css"></style>
+<script type="text/javascript">
+	function drawTree(){
+	/*	var canvas = document.getElementById('drawtree');
+		var ct = canvas.getContext('2d');*/
+
+		/*ct.save();
+		ct.translate(120, 140);
+		ct.beginPath();
+		ct.strokeStyle = '#663300';
+		ct.lineWidth = 4;
+		ct.lineJoin = 'round';
+		ct.moveTo(-25, -50);
+		ct.lineTo(-10, -80);
+		ct.lineTo(-20, -80);
+		ct.lineTo(-5, -110);
+		ct.lineTo(-15,-110);
+
+		ct.lineTo(0,-140);
+		ct.lineTo(15, -110);
+		ct.lineTo(5, -110);
+		ct.lineTo(20, -80);
+		ct.lineTo(10, -80);
+		ct.lineTo(25, -50);
+
+		ct.closePath();
+		ct.stroke();
+		ct.restore();*/
+	
+		/*ct.save();
+		ct.transform(1,0,-0.5,1,0,0);
+		ct.scale(1,0.6);
+		ct.fillStyle = 'rgba(0,0,0,0.2)';
+		ct.fillRect(-5,-50,10,50);
+		ct.translate(50, 20);
+		ct.rotate(-30*Math.PI/180);
+		ct.beginPath();
+		ct.strokeStyle = '#663300';
+		ct.lineWidth = 4;
+		ct.lineJoin = 'round';
+		ct.moveTo(25, 50);
+		ct.lineTo(10, 80);
+		ct.lineTo(20, 80);
+		ct.lineTo(5, 110);
+		ct.lineTo(15,110);
+
+		ct.moveTo(25, 50);
+		ct.lineTo(40, 80);
+		ct.lineTo(30, 80);
+		ct.lineTo(45, 110);
+		ct.lineTo(35, 110);
+		ct.lineTo(15, 110)
+		ct.stroke();
+		ct.fillStyle = 'green';
+		ct.fill();
+		ct.fillStyle = 'brown';
+		ct.fillRect(20, 110, 10, 30);
+		ct.closePath();
+		ct.restore();
+		*/
+
+		 var gravel = new Image();
+        gravel.src = "Keivn.jpg";
+        gravel.onload = function () {
+            drawTrails();
+        }
+
+		function createCanopyPath(ct) {
+            ct.beginPath();
+            ct.moveTo(-25, -50);
+            ct.lineTo(-10, -80);
+            ct.lineTo(-20, -80);
+            ct.lineTo(-5, -110);
+            ct.lineTo(-15, -110);
+
+            ct.lineTo(0, -140);
+
+            ct.lineTo(15, -110);
+            ct.lineTo(5, -110);
+            ct.lineTo(20, -80);
+            ct.lineTo(10, -80);
+            ct.lineTo(25, -50);
+            ct.closePath();
+        }
+
+        function drawTree(ct) {
+            // Save the current canvas state for later
+            ct.save();
+
+            // Create a slanted tree as the shadow by applying
+            //  a shear transform, changing X values to increase
+            //  as Y values increase
+            ct.transform(1, 0,
+                              -0.5, 1,
+                              0, 0);
+
+            // Shrink the shadow down to 60% height in the Y dimension
+            ct.scale(1, 0.6);
+
+            // Set the tree fill to be black, but at only 20% alpha
+            ct.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ct.fillRect(-5, -50, 10, 50);
+
+            // Redraw the tree with the shadow effects applied
+            createCanopyPath(ct);
+            ct.fill();
+
+            // Restore the canvas state
+            ct.restore();
+	
+	}
+	 function drawTrails() {
+            var canvas = document.getElementById('drawtree');
+            var ct = canvas.getContext('2d');
+
+            ct.save();
+            ct.translate(130, 250);
+            drawTree(ct);
+            ct.restore();
+
+            /*ct.save();
+            ct.translate(260, 500);
+
+            ct.scale(2, 2);
+            drawTree(ct);
+            ct.restore();*/
+
+            /*ct.save();
+            ct.translate(-10, 350);
+            ct.beginPath();
+            ct.moveTo(0, 0);
+            ct.quadraticCurveTo(170, -50, 260, -190);
+            ct.quadraticCurveTo(310, -250, 410,-250);
+            ct.strokeStyle = ct.createPattern(gravel, 'repeat');
+            ct.lineWidth = 20;
+            ct.stroke();
+            ct.restore();*/
+        }
+}
+</script>
+</head>
+<body onload="drawTree()">
+	<canvas id="drawtree" style="border:1px solid gray;" width="400" height="600"></canvas>
+</body>
+</html>

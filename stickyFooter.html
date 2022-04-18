@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width initial-scale=1.0 user-scalable=no">
+	<title>Mixin</title>
+	<style>
+		* {
+            padding: 0;
+            margin: 0;
+        }
+        .title {
+            font: 16px/48px "微软雅黑";
+        }
+        html,body {
+            height: 100%;
+        }
+        .wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: rgba(7, 17, 27, .8);
+            z-index: 100;
+        }
+        .content-wrapper {
+            width: 100%;
+            min-height: 100%;
+        }
+        header {
+            position: relative;
+            width: 100%;
+            height: 48px;
+            background: #efeff0;
+            text-align: center;
+        }
+        .content {
+            width: 90%;
+            margin: 0 auto;
+            padding-bottom: 64px;
+        }
+        .close {
+            position: relative;
+            width: 100%;
+            height: 64px;
+            margin: -64px auto 0;
+            padding-top: 16px;
+            font-size: 32px;
+            clear: both;
+            text-align: center;
+        }
+	</style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content-wrapper">
+        <header>
+        	<span class="title">This is header!</span>
+        </header>
+        <div class="content">
+        </div>
+    </div>
+    <div class="close">
+            ×
+    </div>
+</div>
+</body>
+</html>
